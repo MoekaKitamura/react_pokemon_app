@@ -61,7 +61,7 @@ function App() {
       <Navber />
       <div className="App">
         {loaging ? (
-          <h1>ロード中...</h1>
+          <h1 className="loader">ロード中...</h1>
         ) : (
           <>
             <div className="pokemonCardContainer">
