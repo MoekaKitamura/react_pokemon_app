@@ -8,13 +8,17 @@ function App() {
   const initialURL = "https://pokeapi.co/api/v2/pokemon";
   const [loaging, setLoading] = useState(true);
   const [pokemonData, setPokemonData] = useState([]);
+  const [nextUrl, setNextUrl] = useState("");
+  const [prevUrl, setPrevUrl] = useState("");
 
   useEffect(() => {
     const fetchPokemonData = async () => {
       // 全てのポケモンデータを取得
       let res = await getAllPokemon(initialURL);
       // 各ポケモンの詳細なデータを取得
-      loadPokemon(res.results);
+      await loadPokemon(res.results);
+      setNextUrl(res.previous);
+      setNextUrl(res.next);
       setLoading(false);
     };
     fetchPokemonData();
@@ -30,6 +34,28 @@ function App() {
     setPokemonData(_pokemonData);
   };
 
+  const handleNextPage = async () => {
+    if (!nextUrl) return;
+
+    setLoading(true);
+    let data = await getAllPokemon(nextUrl);
+    await loadPokemon(data.results);
+    setPrevUrl(data.previous);
+    setNextUrl(data.next);
+    setLoading(false);
+  };
+
+  const handlePrevPage = async () => {
+    if (!prevUrl) return;
+
+    setLoading(true);
+    let data = await getAllPokemon(prevUrl);
+    await loadPokemon(data.results);
+    setPrevUrl(data.previous);
+    setNextUrl(data.next);
+    setLoading(false);
+  };
+
   return (
     <>
       <Navber />
@@ -37,11 +63,17 @@ function App() {
         {loaging ? (
           <h1>ロード中...</h1>
         ) : (
-          <div className="pokemonCardContainer">
-            {pokemonData.map((pokemon, i) => {
-              return <Card key={i} pokemon={pokemon}></Card>;
-            })}
-          </div>
+          <>
+            <div className="pokemonCardContainer">
+              {pokemonData.map((pokemon, i) => {
+                return <Card key={i} pokemon={pokemon}></Card>;
+              })}
+            </div>
+            <div className="btn">
+              <button onClick={handlePrevPage}>← 前へ</button>
+              <button onClick={handleNextPage}>次へ →</button>
+            </div>
+          </>
         )}
       </div>
     </>
