@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { getAllPokemon, getPokemon } from "./utils/pokemon";
 import Card from "./components/Card/Card";
+import Navber from "./components/Navber/Navber";
 
 function App() {
   const initialURL = "https://pokeapi.co/api/v2/pokemon";
@@ -30,17 +31,20 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {loaging ? (
-        <h1>ロード中...</h1>
-      ) : (
-        <div className="pokemonCardContainer">
-          {pokemonData.map((pokemon, i) => {
-            return <Card key={i} pokemon={pokemon}></Card>;
-          })}
-        </div>
-      )}
-    </div>
+    <>
+      <Navber />
+      <div className="App">
+        {loaging ? (
+          <h1>ロード中...</h1>
+        ) : (
+          <div className="pokemonCardContainer">
+            {pokemonData.map((pokemon, i) => {
+              return <Card key={i} pokemon={pokemon}></Card>;
+            })}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
