@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+<img width="1389" alt="スクリーンショット 2023-11-19 23 39 38" src="https://github.com/MoekaKitamura/react_pokemon_app/assets/86763313/f3c1bb31-764b-4064-90d7-67358717bd3d">
+
 ## Available Scripts
 
 In the project directory, you can run:
